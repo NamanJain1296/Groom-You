@@ -3,6 +3,8 @@ var mongoose = require('mongoose')
 var regrouter = require("./router/reg.router")
 var profrouter = require("./router/prof.router")
 var provrouter = require("./router/prov.router")
+var postrouter = require("./router/post.router")
+var contactrouter = require("./router/contact.router")
 var bp = require("body-parser")
 var cors = require("cors")
 var app = express()
@@ -34,3 +36,5 @@ app.use(express.json({extended:true})) // express.json is used so that the respo
 app.use("/user", regrouter);
 app.use("/user", profrouter);
 app.use("/user", provrouter);
+app.use("/user", postrouter);
+app.use("/user", contactrouter);

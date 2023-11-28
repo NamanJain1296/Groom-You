@@ -7,11 +7,6 @@ async function signup_with_post(req, res){
     console.log(req.body)
     var obj = new userColRef(req.body)
 
-    /* await obj.save().then((doc)=>{
-        res.send("Signedup Successfully");
-    }).catch((err)=>{
-        res.send(err);
-    }) */
     try {
         await obj.save();
         res.send("Signed up Successfully");
@@ -39,7 +34,7 @@ async function login_with_post(req, res){
 
         console.log(existingUser);
 
-        if (existingUser !== null) {
+        if (existingUser != null) {
             var token = webtoken.sign(
                 { email: existingUser.email, choice: existingUser.choice },
                 process.env.sec_key,

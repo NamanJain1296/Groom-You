@@ -40,7 +40,6 @@ async function doSave(req, res) {
 }
 
 
-// Updated doUpdate function
 async function doUpdate(req, res) {
     console.log(req.body);
 
@@ -87,7 +86,6 @@ async function doUpdate(req, res) {
         res.send("Error Updating Profile: " + err.message);
     }
 }
-
 
 async function doFetch(req, res){
     console.log(req.body)

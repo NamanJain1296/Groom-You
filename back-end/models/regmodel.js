@@ -1,5 +1,3 @@
-// regmodel.js
-
 var mongoose = require("mongoose");
 
 function getUserSchema() {

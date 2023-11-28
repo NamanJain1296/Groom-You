@@ -2,6 +2,7 @@ var webtoken = require('jsonwebtoken');
 
 exports.jawth = (req, res, next) => {
     const token = req.headers['authorization']; 
+
     if (!token) {
         res.json({ status: false, message: 'Authorization header is missing' });
         return;
@@ -10,10 +11,9 @@ exports.jawth = (req, res, next) => {
     var ary = token.split(" ");
     try {
         const isValid = webtoken.verify(ary[1], process.env.sec_key);
-        console.log(isValid);
 
         if (isValid) {
-            const dtoken = webtoken.decode(token, process.env.sec_key);
+            const dtoken = webtoken.decode(ary[1], process.env.sec_key);
             req.email = dtoken.email;
             next();
         } else {

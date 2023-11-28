@@ -78,4 +78,26 @@ async function doModify(req, res){
     }
 }
 
-module.exports = {doUpload, doModify};
+async function distinctCategories(req, res){
+    try{
+        const user = await provColRef.distinct("cat")
+        res.json({user,status:true});
+        return
+    }catch(err){
+        res.status(500).json({message:"Something went wrong",status:false})
+        console.log(err)
+    }
+}
+
+async function distinctCities(req, res){
+    try{
+        const user = await provColRef.distinct("city")
+        res.json({user,status:true});
+        return
+    }catch(err){
+        res.status(500).json({message:"Something went wrong",status:false})
+        console.log(err)
+    }
+}
+
+module.exports = {doUpload, doModify, distinctCategories, distinctCities};
