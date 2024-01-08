@@ -31,8 +31,9 @@ async function doUpload(req, res){
         });
 
         await newProfile.save();
-        res.send("Profile Uploaded Successfully");
-    }catch(err){
+        const uploadedProfile = await provColRef.findOne({email});
+        res.json({ message: "Profile Uploaded Successfully", profile: uploadedProfile });
+        }catch(err){
         res.status(500).send("Error Uploading Profile:" + err);
     }
 }
@@ -81,7 +82,7 @@ async function doModify(req, res){
 async function distinctCategories(req, res){
     try{
         const user = await provColRef.distinct("cat")
-        res.json({user,status:true});
+        res.send({user,status:true});
         return
     }catch(err){
         res.status(500).json({message:"Something went wrong",status:false})
@@ -92,7 +93,7 @@ async function distinctCategories(req, res){
 async function distinctCities(req, res){
     try{
         const user = await provColRef.distinct("city")
-        res.json({user,status:true});
+        res.send({user,status:true});
         return
     }catch(err){
         res.status(500).json({message:"Something went wrong",status:false})
@@ -100,4 +101,14 @@ async function distinctCities(req, res){
     }
 }
 
-module.exports = {doUpload, doModify, distinctCategories, distinctCities};
+async function searchProv(req, res){
+    try{
+        const providers = await provColRef.find({cat:req.body.cat, city:req.body.city});
+        res.send(providers);
+    }catch(err){
+        console.error(err);
+        res.status(500).send("Error searching for service providers")
+    }
+}
+
+module.exports = {doUpload, doModify, distinctCategories, distinctCities, searchProv};

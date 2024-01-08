@@ -5,6 +5,7 @@ var profrouter = require("./router/prof.router")
 var provrouter = require("./router/prov.router")
 var postrouter = require("./router/post.router")
 var contactrouter = require("./router/contact.router")
+var adminrouter = require("./router/admin.router")
 var bp = require("body-parser")
 var cors = require("cors")
 var app = express()
@@ -38,3 +39,4 @@ app.use("/user", profrouter);
 app.use("/user", provrouter);
 app.use("/user", postrouter);
 app.use("/user", contactrouter);
+app.use("/user", adminrouter);
