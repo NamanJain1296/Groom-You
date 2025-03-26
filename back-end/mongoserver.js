@@ -10,7 +10,8 @@ var bp = require("body-parser")
 var cors = require("cors")
 var app = express()
 var env = require("dotenv");
-var fileupload = require("express-fileupload")
+var fileupload = require("express-fileupload");
+
 env.config();
 
 app.use(fileupload())
@@ -19,7 +20,7 @@ app.use(bp.urlencoded({extended:true}))
 app.use('/uploads', express.static('uploads'));
 app.use('/uploads2', express.static('uploads2'));
 
-app.listen(3005,()=>{
+app.listen(process.env.PORT || 3005,()=>{
     console.log("### SERVER STARTED ###");
 })
 
@@ -34,6 +35,7 @@ var dbCon = mongoose.connect(dburl).then(()=>{
 })
 
 app.use(express.json({extended:true})) // express.json is used so that the response type remains same in react and node js. Data is converted to json form
+
 app.use("/user", regrouter);
 app.use("/user", profrouter);
 app.use("/user", provrouter);

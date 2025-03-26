@@ -88,8 +88,8 @@ function Signup() {
             navigate('/login');
         } catch (error) {
             // 'error' is now properly declared
-            console.error("Error during login:", error.message);
-            alert("An error occurred during login. Please try again.");
+            console.error("Error during signup:", error.message);
+            alert("An error occurred during signup. Please try again.");
         }
     }
 

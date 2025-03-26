@@ -1,69 +1,77 @@
-import React, {useEffect, useState} from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
 import rstyle from "./comp.module.css";
 import { adminRequest } from "../services/user";
 
-function Admin(){
-    const allowedEmail = "panel123@groomyou.com";
-    const allowedPwd = "panel123";
+function Admin() {
     const navigate = useNavigate();
-    const [obj, setObj] = useState({email:"", pwd:""});
-    const [errObj, setErrObj] = useState({email:"", pwd:""});
+    const allowedEmail = process.env.REACT_APP_ALLOWED_EMAIL;
+    const allowedPwd = process.env.REACT_APP_ALLOWED_PWD;
+    const [obj, setObj] = useState({
+        email: "",
+        pwd: ""
+    });
+    const [errObj, setErrObj] = useState({ email: "", pwd: "" });
 
-    const doUpdateBoth = (event) =>{
-        var {name, value} = event.target;
-        setObj({...obj, [name]:value});
+    const doUpdateBoth = (event) => {
+        var { name, value } = event.target;
+        setObj({ ...obj, [name]: value });
     }
 
-    const doCheck = (event) =>{
-        var {name, value} = event.target;
+    const doCheck = (event) => {
+        var { name, value } = event.target;
+        console.log("Checking email:", value, allowedEmail?.trim());
+        console.log("Checking password:", value, allowedPwd?.trim());
 
-        //Condition for email
-        if(name === 'email' && value == ""){
-            setErrObj({...errObj, ['email']:"*Email cannot be empty"})
+        // Condition for Email Id -
+        if (name === 'email' && value === "") {
+            setErrObj({ ...errObj, ["email"]: "*Email cannot be empty" });
             return;
-        }else if (name === "email" && !value.includes('@')) {
-            setErrObj({ ...errObj, ["email"]: "*Email must contain @" })
-        } else if (value != allowedEmail) {
-            setErrObj({ ...errObj, ["email"]: "*Invalid email" });
+        } else if (name === "email" && !value.includes('@')) {
+            setErrObj({ ...errObj, ["email"]: "*Email must contain @" });
+        } else if (name === "email" && value.trim() !== allowedEmail?.trim()) {
+            setErrObj({ ...errObj, ["email"]: " " });
             return;
         }
 
         // Condition for Password
-    if (name === 'pwd') {
-        if (value === "") {
+        if (name === 'pwd' && value === "") {
             setErrObj({ ...errObj, ["pwd"]: "*Password cannot be empty" });
             return;
-        } else if (value != allowedPwd) {
-            setErrObj({ ...errObj, ["pwd"]: "*Invalid password" });
+        } else if (name === "pwd" && value.trim() !== allowedPwd?.trim()) {
+            setErrObj({ ...errObj, ["pwd"]: " " });
             return;
-        }
         }
     }
 
-    async function adminEntry(){
-        if(obj.email.trim() === "" || obj.pwd.trim() === ""){
+    async function adminEntry() {
+        if (!obj.email || !obj.pwd) {
             alert("Please fill in all fields");
             return;
         }
 
-        try{
+        if (obj.email.trim() !== allowedEmail?.trim() || obj.pwd.trim() !== allowedPwd?.trim()) {
+            alert("Invalid Email or Password");
+            return;
+        }
+
+        try {
             //Make axios post request
             var res = await adminRequest(obj)
             alert(JSON.stringify(res.data))
 
-            if(res.data.status === false){
+            if (res.data.status === false) {
                 alert(res.data.message);
-            }else{
-                alert(res.data.message);
-                alert(`Hello Admin`)
+            } else {
+                alert(`Hello Admin, Welcome Back!!`)
                 navigate("/adashboard")
             }
-        }catch(error){
-            console.error("Error during entrying:", error.message)
-            alert("An error occured during entry. Please try again");
+        } catch (error) {
+            console.error("Error during entry:", error.message)
+            alert("An error occurred during entry. Please try again");
         }
     }
+    
 
     return(
         <div>

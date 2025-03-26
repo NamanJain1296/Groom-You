@@ -1,8 +1,8 @@
 var getUserSchema = require("../models/regmodel")
 var path = require('path')
 var userColRef = getUserSchema();
-
 var webtoken = require("jsonwebtoken")
+
 async function signup_with_post(req, res){
     console.log(req.body)
     var obj = new userColRef(req.body)
@@ -65,4 +65,22 @@ async function currentUser(req, res){
         }
 }
 
-module.exports = {signup_with_post, login_with_post, currentUser};
+async function fetchClients(req, res){
+    try{
+        const clients = await userColRef.find({choice : 'client'});
+        res.json(clients);
+    }catch(error){
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+}
+
+async function fetchProviders(req, res){
+    try{
+        const servProv = await userColRef.find({choice : 'serviceProvider'});
+        res.json(servProv);
+    }catch(error){
+        res.status(500).json({error: 'Internal Server Error'});
+    }
+}
+
+module.exports = {signup_with_post, login_with_post, currentUser, fetchClients, fetchProviders};

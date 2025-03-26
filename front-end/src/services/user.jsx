@@ -74,3 +74,11 @@ export const dataProv = (data) =>{
 export const dataProv2 = (data) =>{
     return privateReq.post("/user/searchClient", data);
 }
+
+export const displayClients = (data) =>{
+    return publicReq.post("/user/fetchClients", data);
+}
+
+export const displayProviders = (data) =>{
+    return publicReq.post("/user/fetchProviders", data);
+}

@@ -15,10 +15,13 @@ import Service from '../Components/provider-profile';
 import PostReq from '../Components/post-req';
 import SearchCl from '../Components/searchclient';
 import Admin from '../Components/admin';
+import AllClients from '../Components/allclients';
+import AlertLink from 'react-bootstrap';
 import "../index.css"
 import Search from '../Components/search';
 import { Container} from 'react-bootstrap';
 import AdminDash from '../Components/adashboard';
+import AllProviders from '../Components/allproviders';
 
 const NavbarComponent = () =>{
   const navbarStyle = {
@@ -98,6 +101,8 @@ function Dashboard() {
         />
         <Route path='/signup' element={<><NavbarComponent2/><Signup/></>}></Route>
         <Route path='/login' element={<><NavbarComponent2/><Login/></>}></Route>
+        <Route path='/allclients' element={<><NavbarComponent2/><AllClients/></>}></Route>
+        <Route path='/allproviders' element={<><NavbarComponent2/><AllProviders/></>}></Route>
         <Route path='/login-profile' element={<><NavbarComponent2/><Profile/></>}></Route>
         <Route path='/provider-profile' element={<><NavbarComponent2/><Service/></>}></Route>
         <Route path='/cdashboard' element={<><NavbarComponent2/><Client/></>}></Route>

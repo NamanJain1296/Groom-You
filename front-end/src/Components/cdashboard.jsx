@@ -63,7 +63,7 @@ function Client(){
                         borderRadius: '5px',
                         cursor: 'pointer',
                         transition: 'background-color 0.3s'
-                    }}>Add your Profile</button>
+                    }}>Add Your Profile</button>
                 </Link>
                 </div>
                 <div style={cardStyle}>
